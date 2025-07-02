@@ -1,6 +1,7 @@
 const $app = document.querySelector("#app");
 
 //initialize the bankAccount
+const bankAccount = [];
 
 //looks for the even values in the bankAccount
 const evenValues = (bankAccount) => {
@@ -35,7 +36,7 @@ const bank = () => {
   $bank.style.padding = "10px";
   $bank.style.border = "1px solid #ccc";
   $bank.innerHTML = `
-
+  ${bankAccount.map(bankAccount => `<p>${bankAccount}</p>`).join("")}
     `;
 
   return $bank;
@@ -59,7 +60,7 @@ const odds = (oddNumbers) => {
   return $odds;
 };
 
-const evens = (addBankAccount) => {
+const evens = () => {
   const $evens = document.createElement("div");
   $evens.classList.add("Evens"); // Changed from "Odds" to "Evens"
   $evens.style.display = "flex";
@@ -83,7 +84,6 @@ const addBankAccount = (e) => {
   const inputValue = Number(e.target[0].value);
   bankAccount.push(inputValue);
   console.log(bankAccount);
-  return bankAccount
 };
 
 const sortOne = (bankAccount) => {
