@@ -40,7 +40,7 @@ const bank = () => {
   $bank.style.border = "1px solid #ccc";
   $bank.innerHTML = $bankContainer.innerHTML = bankAccount
     .map((value) => `<p>${value}</p>`)
-    .join("");
+    .join(""); // we re-call the function bank() in the addBank function so it redoes this little module
   return $bank;
 };
 
