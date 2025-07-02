@@ -1,4 +1,7 @@
 const $app = document.querySelector("#app");
+const $bankContainer = document.createElement("div");
+const $evensContainer = document.createElement("div");
+const $oddsContainer = document.createElement("div");
 
 //initialize the bankAccount
 const bankAccount = [];
@@ -35,10 +38,9 @@ const bank = () => {
   $bank.style.margin = "0 auto";
   $bank.style.padding = "10px";
   $bank.style.border = "1px solid #ccc";
-  $bank.innerHTML = `
-  ${bankAccount.map(bankAccount => `<p>${bankAccount}</p>`).join("")}
-    `;
-
+  $bank.innerHTML = $bankContainer.innerHTML = bankAccount
+    .map((value) => `<p>${value}</p>`)
+    .join("");
   return $bank;
 };
 
@@ -80,17 +82,23 @@ const evens = () => {
 //adds the submit button to the bankAccount array
 const addBankAccount = (e) => {
   e.preventDefault();
+  const input = e.target.querySelector(".input-number"); // to clear out the value
   const inputValue = Number(e.target[0].value);
   bankAccount.push(inputValue);
+  bank();
+  input.value = ""; // Clear the input box
+
   console.log(bankAccount);
 };
 
+//sortOne click
 const sortOne = (bankAccount) => {
   e.preventDefault();
   evenNumbers(bankAccount[0]);
   oddValues(bankAccount[0]);
 };
 
+//sortAll click
 const sortAll = (bankAccount) => {
   e.preventDefault();
   evenValues(bankAccount);
@@ -137,8 +145,7 @@ main = () => {
 
   //bank
   $app.append($bankHeader);
-  $app.append(bank());
-
+  $app.append($bankContainer);
 
   //odds
   $app.append($oddsHeader);
@@ -147,7 +154,6 @@ main = () => {
   //evens
   $app.append($evensHeader);
   $app.append(evens());
-
 };
 
 main();
