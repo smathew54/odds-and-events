@@ -80,7 +80,6 @@ const evens = () => {
 //adds the submit button to the bankAccount array
 const addBankAccount = (e) => {
   e.preventDefault();
-  bankAccount = []
   const inputValue = Number(e.target[0].value);
   bankAccount.push(inputValue);
   console.log(bankAccount);
