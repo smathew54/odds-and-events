@@ -5,28 +5,10 @@ const $oddsContainer = document.createElement("div");
 
 //initialize the bankAccount
 const bankAccount = [];
+const evenNumbers = [];
+const oddNumbers = [];
 
 //looks for the even values in the bankAccount
-const evenValues = (bankAccount) => {
-  const evenNumbers = [];
-  for (value of bankAccount) {
-    if (value % 2 === 0) {
-      evenNumbers.push(value);
-    }
-  }
-  return evenNumbers;
-};
-
-//looks for the odd values in the bankAccount
-const oddValues = (bankAccount) => {
-  const oddNumbers = [];
-  for (value of bankAccount) {
-    if (value % 2 !== 0) {
-      oddNumbers.push(value);
-    }
-  }
-  return oddNumbers;
-};
 
 //creates the bank section
 const bank = () => {
@@ -38,9 +20,13 @@ const bank = () => {
   $bank.style.margin = "0 auto";
   $bank.style.padding = "10px";
   $bank.style.border = "1px solid #ccc";
+
+  //this calls the bankContainer div in the innerHTML and then calls the bankAccount list, and then does a map to join that value alongside empty string
   $bank.innerHTML = $bankContainer.innerHTML = bankAccount
-    .map((value) => `<p>${value}</p>`)
-    .join(""); // we re-call the function bank() in the addBank function so it redoes this little module
+    .map((value) => `${value}  `)
+    .join(""); 
+    
+    // we re-call the function bank() in the addBank function so it redoes this little module
   return $bank;
 };
 
@@ -57,7 +43,7 @@ const odds = (oddNumbers) => {
   $odds.style.border = "1px solid #ccc";
 
   $odds.innerHTML = `
-    
+    odd values go here
   `;
   return $odds;
 };
@@ -71,11 +57,10 @@ const evens = () => {
   $evens.style.margin = "0 auto";
   $evens.style.padding = "10px";
   $evens.style.border = "1px solid #ccc";
-  evenValues(bankAccount);
-  console.log(evenValues(bankAccount));
+  const value = valueSorter(bankAccount);
+  console.log(valueSorter(bankAccount));
   $evens.innerHTML = `
-  
-    `;
+  even values go here`
   return $evens;
 };
 
@@ -91,19 +76,44 @@ const addBankAccount = (e) => {
   console.log(bankAccount);
 };
 
-//sortOne click
-const sortOne = (bankAccount) => {
-  e.preventDefault();
-  evenNumbers(bankAccount[0]);
-  oddValues(bankAccount[0]);
+const valueSorter = (values) => {
+  const evenNumbers = [];
+  for (const value of bankAccount) {
+    if (value % 2 === 0) {
+      evenNumbers.push(value);
+    }
+    else {
+        oddNumbers.push(value)
+    }
+  }
+  return evenNumbers;
 };
 
-//sortAll click
-const sortAll = (bankAccount) => {
+//sortOne click
+//this does console log out that sort one was clicked
+const sortOne = (e) => {
   e.preventDefault();
-  evenValues(bankAccount);
-  oddValues(bankAccount);
+  console.log("sort one")
+  let firstValue = bankAccount.shift
+  console.log(firstValue)
+  console.log(evenNumbers);
+  console.log(oddNumbers);
+  console.log(valueSorter(firstValue));
+
 };
+
+//this does console log out that sortAll was clicked
+const sortAll = (e) => {
+  e.preventDefault();
+  console.log("sort all")
+  console.log(evenNumbers);
+  console.log(oddNumbers);
+  let allValue = valueSorter(bankAccount);
+  console.log(allValue);
+
+};
+
+
 
 //creates the buttons and the acctions from the button
 const form = () => {
@@ -114,12 +124,19 @@ const form = () => {
       <div class = "buttons">
       <input type = "text" class = "input-number" placeholder = "Enter a number">
       <button type = "submit" class = "add-number">Add Number</button>
-      <button type = "button" class = "Sort-one">Sort One</button>
-      <button type = "button" class = "Sort-all">Sort All</button>
+      <button type = "button" class = "sort-one">Sort One</button>
+      <button type = "button" class = "sort-all">Sort All</button>
       </div>
       `;
+  const sortOneButton = $form.querySelector(".sort-one");
+  const sortAllButton = $form.querySelector(".sort-all");
   $form.addEventListener("submit", addBankAccount);
+  sortOneButton.addEventListener("click", sortOne)
+  sortAllButton.addEventListener("click", sortAll)
+
   return $form;
+
+  
 };
 
 main = () => {
